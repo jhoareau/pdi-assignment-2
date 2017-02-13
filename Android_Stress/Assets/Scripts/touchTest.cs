@@ -6,7 +6,6 @@ public class touchTest : MonoBehaviour {
 
 	Ray ray;
 	RaycastHit hit;
-	bool colorChange = false;
 
 	// Use this for initialization
 	void Start () {
@@ -24,13 +23,10 @@ public class touchTest : MonoBehaviour {
 				Debug.Log ("HIT");
 
 				if (hit.collider.tag == "Special") {
-					if (colorChange) {
-						hit.transform.gameObject.GetComponent<Renderer> ().material.SetColor ("_Color", Color.blue);
-						colorChange = false;
-					} else {
-						hit.transform.gameObject.GetComponent<Renderer> ().material.SetColor ("_Color", Color.red); 
-						colorChange = true;
-					}
+					hit.transform.gameObject.GetComponent<Renderer> ().material.SetColor ("_Color", Color.green);
+				}
+				if (hit.collider.tag == "Dsitractor") {
+					hit.transform.gameObject.GetComponent<Renderer> ().material.SetColor ("_Color", Color.red);
 				}
 			}
 		}

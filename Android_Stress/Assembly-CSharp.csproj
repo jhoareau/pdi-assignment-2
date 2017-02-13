@@ -46,7 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\control.cs" />
      <Compile Include="Assets\Scripts\movement.cs" />
+     <Compile Include="Assets\Scripts\movement2.cs" />
      <Compile Include="Assets\Scripts\touchTest.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Development/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

@@ -5,24 +5,27 @@ using UnityEngine;
 public class movement : MonoBehaviour {
 
 	RaycastHit2D hit;
-
 	Vector3 direction;
+
 	public float speed = 5.0f;
+	public GameObject con;
 
 	// Use this for initialization
 	void Start () {
+		// The sum of x and y is not always 1, that is why the special's have different speeds
 		direction = new Vector3 (Random.Range(-1f,1f), Random.Range(-1f,1f), 0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		control cont = con.GetComponent<control> ();
 
-		transform.position = Vector3.Lerp(transform.position, transform.position + direction, speed * Time.deltaTime);
+		if (cont.moving) {
+			transform.position = Vector3.Lerp (transform.position, transform.position + direction, speed * Time.deltaTime);
+		}
 	}
 
 	void OnTriggerEnter(Collider other){
-
-		Debug.Log (other.gameObject.name);
 
 		if (other.gameObject.name == "leftWall") {
 			direction = Vector3.Reflect (direction, Vector3.right);
@@ -36,13 +39,5 @@ public class movement : MonoBehaviour {
 		if (other.gameObject.name == "bottomWall") {
 			direction = Vector3.Reflect (direction, Vector3.up);
 		}
-	}
-
-	void OnCollisionEnter(Collision col){
-
-		ContactPoint con = col.contacts[0];
-
-		direction = Vector3.Reflect (direction, con.normal); 
-
 	}
 }
