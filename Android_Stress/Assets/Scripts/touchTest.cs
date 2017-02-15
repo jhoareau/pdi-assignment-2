@@ -17,7 +17,6 @@ public class touchTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		canvas.active = false;
 	}
 	
 	// Update is called once per frame
@@ -26,7 +25,7 @@ public class touchTest : MonoBehaviour {
 		control cont = con.GetComponent<control> ();
 
 		if(correct == cont.amount){
-			canvas.active = true;
+			canvas.SetActive (true);
 
 			Transform timetext = canvas.transform.Find ("TimeText").GetChild(0);
 			Transform errortext = canvas.transform.Find ("ErrorText").GetChild(0);
