@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class movement : MonoBehaviour {
+public class movement : MonoBehaviour
+{
 
 	RaycastHit2D hit;
 	Vector3 direction;
@@ -11,21 +12,41 @@ public class movement : MonoBehaviour {
 	public GameObject con;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		// The sum of x and y is not always 1, that is why the special's have different speeds
-		direction = new Vector3 (Random.Range(-1f,1f), Random.Range(-1f,1f), 0);
+		direction = new Vector3 (Random.Range (-1f, 1f), Random.Range (-1f, 1f), 0);
+		direction = direction.normalized;
+		control cont = con.GetComponent<control> ();
+
+		Debug.Log ("From movement: " + cont.moving);
+
+		Rigidbody rb = GetComponent<Rigidbody> ();
+		rb.AddForce (direction * 300f);
+		//transform.position = Vector3.Lerp (transform.position, transform.position + direction, speed * Time.deltaTime);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 		control cont = con.GetComponent<control> ();
+		if (!cont.moving) {
+			Rigidbody rb = GetComponent<Rigidbody> ();
+			Vector3 v = rb.velocity;
+			v.y = 0;
+			v.x = 0;
 
-		if (cont.moving) {
-			transform.position = Vector3.Lerp (transform.position, transform.position + direction, speed * Time.deltaTime);
+			rb.velocity = v;
 		}
 	}
 
-	void OnTriggerEnter(Collider other){
+	public void SetController (GameObject con)
+	{
+		this.con = con;
+	}
+
+	/*void OnTriggerEnter (Collider other)
+	{
 
 		if (other.gameObject.name == "leftWall") {
 			direction = Vector3.Reflect (direction, Vector3.right);
@@ -39,5 +60,5 @@ public class movement : MonoBehaviour {
 		if (other.gameObject.name == "bottomWall") {
 			direction = Vector3.Reflect (direction, Vector3.up);
 		}
-	}
+	}*/
 }
