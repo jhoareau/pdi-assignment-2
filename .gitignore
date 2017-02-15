@@ -32,6 +32,10 @@ proguard/
 # Android Studio captures folder
 captures/
 
+# Unity library folder
+/Android_Stress/[Ll]ibrary/
+/Android_Stress/[Tt]emp/
+
 # Intellij
 *.iml
 .idea/workspace.xml
