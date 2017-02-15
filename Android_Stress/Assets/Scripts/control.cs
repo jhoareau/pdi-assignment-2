@@ -19,20 +19,12 @@ public class control : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		int count1 = -13;
-		int count2 = -5;
 		movement mm = special.GetComponent<movement> ();
 		mm.SetController (this.gameObject);
+
 		for (int i = 0; i < amount; i++) {
-			Vector3 pos = new Vector3 (count1, count2, -2f);
+			Vector3 pos = new Vector3 (Random.Range(-13,13), Random.Range(-5,5), -2f);
 			Instantiate (special, pos, Quaternion.Euler (new Vector3 (0, 0, 0)));
-
-			count1 += 5;
-
-			if (count1 > 13) {
-				count1 = -13;
-				count2 += 5;
-			}
 		}
 	}
 	
@@ -48,10 +40,7 @@ public class control : MonoBehaviour
 		}
 
 		if (spawning && stopmovement) {
-			Debug.Log ("Here");
-
 			StartCoroutine (StopMovement ());
-
 			stopmovement = false;
 		}
 			
@@ -59,24 +48,14 @@ public class control : MonoBehaviour
 
 	IEnumerator ActivateDistractors ()
 	{
-		yield return new WaitForSeconds (7);
-
-		int count1 = -13;
-		int count2 = -5;
+		yield return new WaitForSeconds (2);
 
 		movement2 mm = distractor.GetComponent<movement2> ();
 		mm.SetController (this.gameObject);
 
 		for (int i = 0; i < amount + 5; i++) {
-			Vector3 pos = new Vector3 (count1, count2, -2f);
+			Vector3 pos = new Vector3 (Random.Range(-13,13), Random.Range(-5,5), -2f);
 			Instantiate (distractor, pos, Quaternion.Euler (new Vector3 (0, 0, 0)));
-
-			count1 += 5;
-
-			if (count1 > 13) {
-				count1 = -13;
-				count2 += 5;
-			}
 		}
 
 		spawning = true;
@@ -84,7 +63,7 @@ public class control : MonoBehaviour
 
 	IEnumerator StopMovement ()
 	{
-		yield return new WaitForSeconds (1);
+		yield return new WaitForSeconds (2);
 		Debug.Log ("10 sec");
 
 		moving = false;

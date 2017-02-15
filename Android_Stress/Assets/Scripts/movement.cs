@@ -17,9 +17,6 @@ public class movement : MonoBehaviour
 		// The sum of x and y is not always 1, that is why the special's have different speeds
 		direction = new Vector3 (Random.Range (-1f, 1f), Random.Range (-1f, 1f), 0);
 		direction = direction.normalized;
-		control cont = con.GetComponent<control> ();
-
-		Debug.Log ("From movement: " + cont.moving);
 
 		Rigidbody rb = GetComponent<Rigidbody> ();
 		rb.AddForce (direction * 300f);
