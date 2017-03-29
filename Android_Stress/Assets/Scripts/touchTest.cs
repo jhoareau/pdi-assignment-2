@@ -14,17 +14,15 @@ public class touchTest : MonoBehaviour {
 	float timer = 0;
 	int errors = 0;
 	int correct = 0;
-
-	// Use this for initialization
-	void Start () {
-	}
 	
 	// Update is called once per frame
 	void Update () {
 
+		// Get controller
 		control cont = con.GetComponent<control> ();
 
-		if(correct == cont.amount){
+		// Activate overview canvas, when all targets are found
+		if(correct == PlayerPrefs.GetInt("Targets")){
 			canvas.SetActive (true);
 
 			Transform timetext = canvas.transform.Find ("TimeText").GetChild(0);
@@ -36,19 +34,21 @@ public class touchTest : MonoBehaviour {
 			cont.moving = true;
 		}
 
-
-		if (!cont.moving && correct != cont.amount) {
+		// Count time from all movement have stopped
+		if (!cont.moving && correct != PlayerPrefs.GetInt("Targets")) {
 			timer += 1 * Time.deltaTime;
-			Debug.Log ("time: " + timer);
 		}
 
+		// Touch controls
+		// * If there is a touch and the touch is the first one in its beginning phase (start of touch)
+		// * then we have a touch
 		if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) {
+			// Create ray from touch position
 			ray = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
 			Debug.DrawRay (ray.origin, ray.direction * 20f, Color.red);
 
+			// Cast ray and react if all movement have stopped
 			if (Physics.Raycast (ray,out hit,Mathf.Infinity) && !cont.moving) {
-				Debug.Log ("HIT");
-
 				if (hit.collider.tag == "Special") {
 					hit.transform.gameObject.GetComponent<Renderer> ().material.SetColor ("_Color", Color.green);
 					correct += 1;
