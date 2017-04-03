@@ -10,10 +10,16 @@ public class touchTest : MonoBehaviour {
 
 	public GameObject con;
 	public GameObject canvas;
+	private Transform levelButton;
+	private Transform levelPerformanceText;
+
+	private int maxTargets = 5;
+	private int maxDistractors = 7;
 
 	float timer = 0;
 	int errors = 0;
 	int correct = 0;
+	bool targetsFound = false;
 	
 	// Update is called once per frame
 	void Update () {
@@ -22,8 +28,10 @@ public class touchTest : MonoBehaviour {
 		control cont = con.GetComponent<control> ();
 
 		// Activate overview canvas, when all targets are found
-		if(correct == PlayerPrefs.GetInt("Targets")){
+		if(correct == PlayerPrefs.GetInt("Targets") && !targetsFound){
+			targetsFound = true;
 			canvas.SetActive (true);
+			CheckNextLevelConditions ();
 
 			Transform timetext = canvas.transform.Find ("TimeText").GetChild(0);
 			Transform errortext = canvas.transform.Find ("ErrorText").GetChild(0);
@@ -59,5 +67,36 @@ public class touchTest : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	void CheckNextLevelConditions (){
+		levelButton = canvas.transform.Find ("NextButton");
+		levelPerformanceText = canvas.transform.Find ("ProgressText");
+
+		//For now
+		if (timer < 3 && errors == 0) {
+			levelButton.gameObject.SetActive (true);
+			//levelPerformanceText.GetComponent<Text> ().text = "You did great!";
+			if(maxTargets >= PlayerPrefs.GetInt("Targets") + 1){
+				PlayerPrefs.SetInt ("Targets", PlayerPrefs.GetInt("Targets") + 1);
+			}
+			if (maxDistractors >= PlayerPrefs.GetInt ("Distractors") + 1) {
+				PlayerPrefs.SetInt ("Distractors", PlayerPrefs.GetInt ("Distractors") + 1);
+			}
+		} else if (timer < 3 && errors > 0 && PlayerPrefs.GetInt("Targets") > 1 && errors < (int)(PlayerPrefs.GetInt("Targets") / 2)) {
+			levelButton.gameObject.SetActive (true);
+			//levelPerformanceText.GetComponent<Text> ().text = "Good enough!";
+			if(maxTargets >= PlayerPrefs.GetInt("Targets") + 1){
+				PlayerPrefs.SetInt ("Targets", PlayerPrefs.GetInt("Targets") + 1);
+			}
+			if (maxDistractors >= PlayerPrefs.GetInt ("Distractors") + 1) {
+				PlayerPrefs.SetInt ("Distractors", PlayerPrefs.GetInt ("Distractors") + 1);
+			}
+		} else {
+			//levelPerformanceText.GetComponent<Text> ().text = "Try again!";
+		}
+
+		Debug.Log ("Number of Targets " + PlayerPrefs.GetInt("Targets"));
+		Debug.Log ("Number of Distractors " + PlayerPrefs.GetInt ("Distractors"));
 	}
 }
