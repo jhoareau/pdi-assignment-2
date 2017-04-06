@@ -15,6 +15,7 @@ public class control : MonoBehaviour
 	bool spawned = false;
 	bool spawning = false;
 	bool stopmovement = true;
+	bool fading = false;
 
 
 	// Use this for initialization
@@ -34,7 +35,6 @@ public class control : MonoBehaviour
 		// Launch all targets (specials)
 		for (int i = 0; i < amount; i++) {
 			Vector3 pos = new Vector3 (Random.Range(-13,13), Random.Range(-5,5), -2f);
-
 			// Loop to check if spawning inside other object
 			bool free = false;
 			while (!free) {
@@ -112,11 +112,34 @@ public class control : MonoBehaviour
 					free = true;
 			}
 
-			Instantiate (distractor, pos, Quaternion.Euler (new Vector3 (0, 0, 0)));
+
+			GameObject ob = Instantiate (distractor, pos, Quaternion.Euler (new Vector3 (0, 0, 0)));
+			Color color  = ob.GetComponent<Renderer> ().material.color;
+			color.a = 0;
+			ob.GetComponent<Renderer> ().material.color = color;
 			dists = GameObject.FindGameObjectsWithTag ("Distractor");
 		}
 
 		spawning = true;
+		fading = true;
+		StartCoroutine (FadeIn());
+	}
+
+	IEnumerator FadeIn(){
+		GameObject[] dists = GameObject.FindGameObjectsWithTag ("Distractor");
+		bool reachedMax = false;
+		if (fading) {
+			for (float j = 0; j <= 1; j += Time.deltaTime) {
+				for (int i = 0; i < dists.Length; i++) {
+					Color color  = dists [i].GetComponent<Renderer> ().material.color;
+					color.a = j;
+					dists [i].GetComponent<Renderer> ().material.color = color;
+				}
+				if (j == 1)
+					fading = false;
+				yield return null;
+			}
+		}
 	}
 
 	// Stop all movement after 4 seconds

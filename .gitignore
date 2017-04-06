@@ -42,3 +42,4 @@ Android_Stress/[Tt]emp/
 
 # Keystore files
 *.jks
+Android_Stress/obj/Debug/Assembly-CSharp.csproj.FileListAbsolute.txt
