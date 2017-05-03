@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class movement : MonoBehaviour
 {
-
 	RaycastHit2D hit;
 	Vector3 direction;
 
@@ -26,6 +25,7 @@ public class movement : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		// Stop movement when the 'moving' varible is false
 		control cont = con.GetComponent<control> ();
 		if (!cont.moving) {
 			Rigidbody rb = GetComponent<Rigidbody> ();

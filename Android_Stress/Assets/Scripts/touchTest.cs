@@ -10,16 +10,14 @@ public class touchTest : MonoBehaviour {
 
 	public GameObject con;
 	public GameObject canvas;
-	private Transform levelButton;
-	private Transform levelPerformanceText;
 
+	private Transform levelButton;
 	private int maxTargets = 5;
 	private int maxDistractors = 7;
-
-	float timer = 0;
-	int errors = 0;
-	int correct = 0;
-	bool targetsFound = false;
+	private float timer = 0;
+	private int errors = 0;
+	private int correct = 0;
+	private bool targetsFound = false;
 	
 	// Update is called once per frame
 	void Update () {
@@ -44,7 +42,7 @@ public class touchTest : MonoBehaviour {
 
 		// Count time from all movement have stopped
 		if (!cont.moving && correct != PlayerPrefs.GetInt("Targets")) {
-			timer += 1 * Time.deltaTime;
+			timer += Time.deltaTime;
 		}
 
 		// Touch controls
@@ -53,7 +51,6 @@ public class touchTest : MonoBehaviour {
 		if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) {
 			// Create ray from touch position
 			ray = Camera.main.ScreenPointToRay (Input.GetTouch (0).position);
-			Debug.DrawRay (ray.origin, ray.direction * 20f, Color.red);
 
 			// Cast ray and react if all movement have stopped
 			if (Physics.Raycast (ray,out hit,Mathf.Infinity) && !cont.moving) {
@@ -69,14 +66,13 @@ public class touchTest : MonoBehaviour {
 		}
 	}
 
+	// Checking after the game has been played. Maybe the level should be adjusted
 	void CheckNextLevelConditions (){
 		levelButton = canvas.transform.Find ("NextButton");
-		levelPerformanceText = canvas.transform.Find ("ProgressText");
 
-		//For now
+		// Checking timer and errors to decide if next level should be available
 		if (timer < 3 && errors == 0) {
 			levelButton.gameObject.SetActive (true);
-			//levelPerformanceText.GetComponent<Text> ().text = "You did great!";
 			if(maxTargets >= PlayerPrefs.GetInt("Targets") + 1){
 				PlayerPrefs.SetInt ("Targets", PlayerPrefs.GetInt("Targets") + 1);
 			}
@@ -85,18 +81,12 @@ public class touchTest : MonoBehaviour {
 			}
 		} else if (timer < 3 && errors > 0 && PlayerPrefs.GetInt("Targets") > 1 && errors < (int)(PlayerPrefs.GetInt("Targets") / 2)) {
 			levelButton.gameObject.SetActive (true);
-			//levelPerformanceText.GetComponent<Text> ().text = "Good enough!";
 			if(maxTargets >= PlayerPrefs.GetInt("Targets") + 1){
 				PlayerPrefs.SetInt ("Targets", PlayerPrefs.GetInt("Targets") + 1);
 			}
 			if (maxDistractors >= PlayerPrefs.GetInt ("Distractors") + 1) {
 				PlayerPrefs.SetInt ("Distractors", PlayerPrefs.GetInt ("Distractors") + 1);
 			}
-		} else {
-			//levelPerformanceText.GetComponent<Text> ().text = "Try again!";
 		}
-
-		Debug.Log ("Number of Targets " + PlayerPrefs.GetInt("Targets"));
-		Debug.Log ("Number of Distractors " + PlayerPrefs.GetInt ("Distractors"));
 	}
 }

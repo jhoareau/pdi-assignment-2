@@ -6,26 +6,31 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-	// Screen change functions
-	public void LoadSetings () 
+	// Load settings screen
+	public void LoadSettings () 
 	{
 		SceneManager.LoadScene (1);
 	}
 
+	// Load game screen
 	public void LoadLevel ()
 	{
 		SceneManager.LoadScene (2);
 	}
 
-	public void LoadHelp(){
+	// Load help screen
+	public void LoadHelp ()
+	{
 		SceneManager.LoadScene (3);
 	}
 
+	// Quit application
 	public void Exit ()
 	{
 		Application.Quit ();
 	}
 
+	// Load main menu
 	public void MainMenu ()
 	{
 		SceneManager.LoadScene (0);
@@ -33,17 +38,18 @@ public class UIManager : MonoBehaviour
 
 	// Settings fuctions
 
+	// Set values according to selected buttons
 	public void buttonSelect(int button)
 	{
+		// Button 0 to 4 is target buttons, and higher are distractor buttons
 		if (button < 5) {
 			PlayerPrefs.SetInt ("Targets", button + 1);
 		} else {
 			PlayerPrefs.SetInt ("Distractors", button - 2);
 		}
-		Debug.Log ("Targets" + PlayerPrefs.GetInt("Targets"));
-		Debug.Log ("Distractors" + PlayerPrefs.GetInt("Distractors"));
 	}
 
+	// Set the selected buttons color
 	public void SetButtonColor(GameObject b)
 	{
 		GameObject[] buttons = GameObject.FindGameObjectsWithTag ("button");
@@ -59,6 +65,7 @@ public class UIManager : MonoBehaviour
 		b.GetComponent<Button> ().colors = cb2;
 	}
 
+	// Set selected buttons color
 	public void SetButtonColor2(GameObject b)
 	{
 		GameObject[] buttons = GameObject.FindGameObjectsWithTag ("button2");

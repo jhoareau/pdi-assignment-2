@@ -1,12 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\control.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\UIManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\control.cs" Line="24" Column="43" />
-      <File FileName="Assets\Scripts\touchTest.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\movement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\UIManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\settingStart.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\control.cs" Line="69" Column="3" />
+      <File FileName="Assets\Scripts\movement.cs" Line="39" Column="2" />
+      <File FileName="Assets\Scripts\settingStart.cs" Line="41" Column="70" />
+      <File FileName="Assets\Scripts\startUp.cs" Line="19" Column="3" />
+      <File FileName="Assets\Scripts\touchTest.cs" Line="73" Column="75" />
+      <File FileName="Assets\Scripts\UIManager.cs" Line="68" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

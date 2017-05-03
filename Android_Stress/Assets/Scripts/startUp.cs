@@ -15,13 +15,10 @@ public class startUp : MonoBehaviour {
 
 		// If not targets found, set targets
 		if (targetAmount == 0) 
-		{
 			PlayerPrefs.SetInt ("Targets", 1);
-		}
+		
 		// If not distractors found, set distractors
 		if (distractorAmount == 0) 
-		{
 			PlayerPrefs.SetInt ("Distractors", 3);
-		}
 	}
 }
